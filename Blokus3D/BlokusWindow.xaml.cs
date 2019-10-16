@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Blokus3D.Logic;
+using Blokus3D.Models;
+using Blokus3D.Models3D;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -40,9 +43,9 @@ namespace Blokus3D
             _board = new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ);
             var warmup1 = Point3DContainer.Instance;
             var warmup2 = Piece3DContainer.Instance;
-            DrawGrid();
             ResetSolver();
             DrawText();
+            DrawGrid();
         }
 
         private void ResetSolver()
@@ -52,6 +55,21 @@ namespace Blokus3D
             _solver = new Solver(board, Configuration.PieceSet.Select(x => (Piece)x.Clone()).ToList());
             _solver.SolutionFound += new Solver.SolutionEventHandler(SolutionFound);
             _solver.Finished += new Solver.FinishedEventHandler(Finished);
+        }
+
+        private void DrawText()
+        {
+            solutionText.Text = _isWatchingSolution
+                ? "Solution: " + (_solutions.Any() ? _solutionNr + 1 + "/" + _solutions.Count : "0/0")
+                : _solver.Status.ToString();
+            pieceText.Text = _isWatchingSolution
+                ? "     Piece: " + (_solutions.Any() ? _pieceNr + 1 + "/" + _solutions[_solutionNr].Pieces.Count : "0/0")
+                : "Solutions found: " + _solutions.Count;
+
+            if (Configuration.Delay <= 5)
+            {
+                solutionText.Text += " (drawing disabled)";
+            }
         }
 
         private void DrawGrid()
@@ -72,27 +90,12 @@ namespace Blokus3D
             for (int i = 0; i < pieces.Count; i++)
             {
                 var piece3D = Piece3DContainer.Instance.GetPiece3D(pieces[i]);
-                piece3D.Model.Material = new DiffuseMaterial(new SolidColorBrush(HelperClass.GetMediaColor(i)));
+                piece3D.Model.Material = new DiffuseMaterial(new SolidColorBrush(ColorPicker.GetMediaColor(i)));
                 piece3D.Model.Transform = _transform;
                 group.Children.Add(piece3D.Model);
             }
         }
-
-        private void DrawText()
-        {
-            solutionText.Text = _isWatchingSolution 
-                ? "Solution: " + (_solutions.Any() ? _solutionNr + 1 + "/" + _solutions.Count : "0/0")
-                : _solver.Status.ToString();
-            pieceText.Text = _isWatchingSolution 
-                ? "     Piece: " + (_solutions.Any() ? _pieceNr + 1 + "/" + _solutions[_solutionNr].Pieces.Count : "0/0")
-                : "Solutions found: " + _solutions.Count;
-
-            if (Configuration.Delay <= 5)
-            {
-                solutionText.Text += " (drawing disabled)";
-            }
-        }
-
+        
         private void ResetClick(object sender, RoutedEventArgs e)
         {
             _camera.Position = new Point3D(_camera.Position.X, _camera.Position.Y, 7);

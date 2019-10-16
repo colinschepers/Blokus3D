@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blokus3D
+namespace Blokus3D.Models
 {
     public class Board : ICloneable
     {

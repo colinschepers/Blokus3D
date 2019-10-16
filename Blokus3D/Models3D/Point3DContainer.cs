@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Blokus3D.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
-namespace Blokus3D
+namespace Blokus3D.Models3D
 {
     public class Point3DContainer
     {

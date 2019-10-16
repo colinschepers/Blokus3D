@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Blokus3D.Models;
+using System.Collections.Generic;
 
-namespace Blokus3D
+namespace Blokus3D.Models
 {
     public class Configuration
     {

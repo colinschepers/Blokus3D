@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Blokus3D.Models;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Blokus3D
+namespace Blokus3D.Models3D
 {
     public class Grid3D
     {

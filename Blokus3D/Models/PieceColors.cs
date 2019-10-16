@@ -1,4 +1,4 @@
-﻿namespace Blokus3D
+﻿namespace Blokus3D.Models
 {
     public enum PieceColors
     {

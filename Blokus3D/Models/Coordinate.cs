@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Blokus3D
+namespace Blokus3D.Models
 {
     public class Coordinate : IComparable, ICloneable
     {

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using Blokus3D.Models;
 
 namespace Blokus3D
 {

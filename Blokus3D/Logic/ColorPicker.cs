@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Blokus3D.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
 
-namespace Blokus3D
+namespace Blokus3D.Logic
 {
-    public class HelperClass
+    public class ColorPicker
     {
         public static Color GetMediaColor(PieceColors pieceColor)
         {
@@ -84,16 +85,6 @@ namespace Blokus3D
                     break;
             }
             return Color.FromArgb(0, 0, 0, 0);
-        }
-
-        public static Coordinate[] Copy(Coordinate[] coordinateArray)
-        {
-            var copy = new Coordinate[coordinateArray.Length];
-            for (int i = 0; i < coordinateArray.Length; i++)
-            {
-                copy[i] = (Coordinate)coordinateArray[i].Clone();
-            }
-            return copy;
         }
     }
 }

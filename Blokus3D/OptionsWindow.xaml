@@ -33,10 +33,6 @@
                 <ComboBoxItem Content="4" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="5" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="6" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="7" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="8" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="9" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="10" HorizontalAlignment="Center"></ComboBoxItem>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Size Y" />
             <ComboBox x:Name="SizeYComboBox" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center">
@@ -46,10 +42,6 @@
                 <ComboBoxItem Content="4" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="5" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="6" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="7" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="8" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="9" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="10" HorizontalAlignment="Center"></ComboBoxItem>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="Size Z" />
             <ComboBox x:Name="SizeZComboBox" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center">
@@ -59,10 +51,6 @@
                 <ComboBoxItem Content="4" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="5" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="6" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="7" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="8" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="9" HorizontalAlignment="Center"></ComboBoxItem>
-                <ComboBoxItem Content="10" HorizontalAlignment="Center"></ComboBoxItem>
             </ComboBox>
         </Grid>
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Blokus3D.Logic;
+using Blokus3D.Models;
+using Blokus3D.Models3D;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -66,7 +69,7 @@ namespace Blokus3D
                 }
             }
 
-            return new GeometryModel3D(mesh, new DiffuseMaterial(new SolidColorBrush(HelperClass.GetMediaColor(piece.Color))))
+            return new GeometryModel3D(mesh, new DiffuseMaterial(new SolidColorBrush(ColorPicker.GetMediaColor(piece.Color))))
             {
                 Transform = new Transform3DGroup()
             };

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Blokus3D.Logic;
+using Blokus3D.Models;
+using System;
 using System.Linq;
 
-namespace Blokus3D
+namespace Blokus3D.Models3D
 {
     public class Piece3DContainer
     {
@@ -36,7 +38,7 @@ namespace Blokus3D
 
                 for (int shapeNr = 0; shapeNr < Configuration.ShapeCount; shapeNr++)
                 {
-                    for (int permNr = 0; permNr < Shapes.GetNumberOfPermutations(shapeNr); permNr++)
+                    for (int permNr = 0; permNr < Permutations.GetPermutationCount(shapeNr); permNr++)
                     {
                         for (int x = 0; x < _boardSizeX; x++)
                         {
@@ -50,7 +52,7 @@ namespace Blokus3D
                                         piece.MoveTo(new Coordinate(x, y, z));
                                         if (board.CanPlace(piece))
                                         {
-                                            _pieces[(int)pieceColor, shapeNr, permNr, x, y, z] = new Piece3D(piece, HelperClass.GetMediaColor(piece.Color));
+                                            _pieces[(int)pieceColor, shapeNr, permNr, x, y, z] = new Piece3D(piece, ColorPicker.GetMediaColor(piece.Color));
                                         }
                                     }
                                 }
