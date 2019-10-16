@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blokus3D", "Blokus3D\Blokus3D.csproj", "{7C4FA34A-642A-4AAE-80AB-FE42F53779F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C4FA34A-642A-4AAE-80AB-FE42F53779F1}.Debug|x86.ActiveCfg = Debug|x86
+		{7C4FA34A-642A-4AAE-80AB-FE42F53779F1}.Debug|x86.Build.0 = Debug|x86
+		{7C4FA34A-642A-4AAE-80AB-FE42F53779F1}.Release|x86.ActiveCfg = Release|x86
+		{7C4FA34A-642A-4AAE-80AB-FE42F53779F1}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15870B5F-DFA0-461B-BDA6-08C0279E8BCD}
+	EndGlobalSection
+EndGlobal

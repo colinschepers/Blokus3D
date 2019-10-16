@@ -1,0 +1,81 @@
+﻿<Window x:Class="Blokus3D.BlokusWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Blokus 3D" WindowState="Maximized" >
+    <Grid Background="Black" MouseWheel="Grid_MouseWheel"
+		MouseDown="Grid_MouseDown" MouseUp="Grid_MouseUp"
+		MouseMove="Grid_MouseMove">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions> 
+            <Button x:Name="start_button" Grid.Row="0" Grid.Column="0" Content="Start" Click="StartClick" />
+            <Button x:Name="pause_button" Grid.Row="0" Grid.Column="1" Content="Pause/Resume" Click="PauseClick" />
+            <Button x:Name="stop_button" Grid.Row="0" Grid.Column="2" Content="Stop" Click="StopClick" />
+            <ComboBox x:Name="delay_combobox" Grid.Row="0" Grid.Column="3" SelectedIndex="2" SelectionChanged="DelaySelectionChanged" HorizontalContentAlignment="Center">
+                <ComboBoxItem Name="Slowest" Content="Slowest" HorizontalAlignment="Center"></ComboBoxItem>
+                <ComboBoxItem Name="Slow" Content="Slow" HorizontalAlignment="Center"></ComboBoxItem>
+                <ComboBoxItem Name="Normal" Content="Normal" HorizontalAlignment="Center"></ComboBoxItem>
+                <ComboBoxItem Name="Fast" Content="Fast" HorizontalAlignment="Center"></ComboBoxItem>
+                <ComboBoxItem Name="Fastest" Content="Fastest" HorizontalAlignment="Center"></ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="reset_button" Grid.Row="0" Grid.Column="4" Content="Reset Camera" Click="ResetClick" />
+            <Button x:Name="options_button" Grid.Row="0" Grid.Column="5" Content="Options" Click="OptionsClick" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Viewport3D x:Name="viewport" Grid.Row="1">
+                <Viewport3D.Camera>
+                    <PerspectiveCamera x:Name="_camera" FarPlaneDistance="50" LookDirection="0,0,-10"
+					UpDirection="0,1,0" NearPlaneDistance="0" Position="0,0,7"
+					FieldOfView="45" />
+                </Viewport3D.Camera>
+
+                <ModelVisual3D x:Name="model">
+                    <ModelVisual3D.Content>
+                        <Model3DGroup x:Name="group">
+                            <AmbientLight Color="DarkGray" />
+                            <DirectionalLight Color="White" Direction="-5,-5,-7" />
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D>
+            <TextBlock Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="10,5,0,0" Name="solutionText" Text="" Foreground="LightGray" VerticalAlignment="Top" />
+            <TextBlock Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="10,20,0,0" Name="pieceText" Text="" Foreground="LightGray" VerticalAlignment="Top" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" /> 
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="previous_solution_button" Grid.Row="1" Grid.Column="0" Content="Previous Solution" Click="PreviousSolutionClick" />
+            <Button x:Name="first_block_button" Grid.Row="1" Grid.Column="1" Content="First Block" Click="FirstBlockClick" />
+            <Button x:Name="previous_block_button" Grid.Row="1" Grid.Column="2" Content="Previous Block" Click="PreviousBlockClick" />
+            <Button x:Name="next_block_button" Grid.Row="1" Grid.Column="3" Content="Next Block" Click="NextBlockClick" />
+            <Button x:Name="last_block_button" Grid.Row="1" Grid.Column="4" Content="Last Block" Click="LastBlockClick" />
+            <Button x:Name="next_solution_button" Grid.Row="1" Grid.Column="5" Content="Next Solution" Click="NextSolutionClick" />
+        </Grid>
+    </Grid>
+</Window>
