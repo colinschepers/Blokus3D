@@ -35,17 +35,13 @@ namespace Blokus3D
 
             new Thread(() => 
             {
-                int blockCount = _pieceSet.Sum(p => p.Size());
-                if (blockCount >= _board.FreeSquares)
-                {
-                    Prune(new Coordinate(0, 0, 0));
-                }
+                Solve(new Coordinate(0, 0, 0));
                 Status = SolverStatus.Stopped;
                 Finished();
             }) { IsBackground = true, Priority = ThreadPriority.Lowest }.Start();
         }
 
-        private void Prune(Coordinate coordinate)
+        private void Solve(Coordinate coordinate)
         {
             if (BoardHasIsolatedRegion(coordinate))
             {
@@ -57,7 +53,7 @@ namespace Blokus3D
                 var piece = _pieceSet[p];
                 piece.MoveTo(coordinate);
 
-                for (int r = 0; r < piece.GetNrOfPermutations(); r++)
+                for (int r = 0; r < piece.PermutationCount; r++)
                 {
                     if (_board.CanPlace(piece))
                     {
@@ -73,12 +69,12 @@ namespace Blokus3D
 
                         _board.Place(piece);
                         _pieceSet.RemoveAt(p);
-
+                        
                         Thread.Sleep(Configuration.Delay);
 
                         var solutionFound = _board.FreeSquares == 0;
 
-                        if (_board.FreeSquares == 0)
+                        if (solutionFound)
                         {
                             SolutionFound((Board)_board.Clone());
                         }
@@ -95,9 +91,9 @@ namespace Blokus3D
                             }
                             while (!_board.IsEmpty(nextCoordinate));
 
-                            Prune(nextCoordinate);
+                            Solve(nextCoordinate);
                         }
-
+                        
                         _board.Remove(piece);
                         _pieceSet.Insert(p, piece);
 
@@ -106,16 +102,18 @@ namespace Blokus3D
                             return;
                         }
                     }
+
                     piece.NextPermutation();
                 }
             }
         }
 
-        private void NextCoordinate(Coordinate coordinate)
+        private Coordinate NextCoordinate(Coordinate coordinate)
         {
             coordinate.X = (coordinate.X + 1) % Configuration.BoardSizeX;
             coordinate.Y = coordinate.X == 0 ? (coordinate.Y + 1) % Configuration.BoardSizeY : coordinate.Y;
             coordinate.Z = coordinate.X == 0 && coordinate.Y == 0 ? coordinate.Z + 1 : coordinate.Z;
+            return coordinate;
         }
 
         private bool BoardHasIsolatedRegion(Coordinate coordinate)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Blokus3D
 {
@@ -84,7 +82,7 @@ namespace Blokus3D
 
         private void TryAdd(Coordinate[] coordinates, List<Coordinate[]> permutations)
         {
-            foreach (Coordinate[] permutation in permutations)
+            foreach (var permutation in permutations)
             {
                 bool samePerm = true;
                 for (int i = 0; i < permutation.Length; i++)
@@ -95,7 +93,10 @@ namespace Blokus3D
                         break;
                     }
 			    }
-                if(samePerm) return;
+                if (samePerm)
+                {
+                    return;
+                }
             }
             permutations.Add(coordinates);
         }

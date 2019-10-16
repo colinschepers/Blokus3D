@@ -7,6 +7,7 @@ namespace Blokus3D
         public PieceColors Color { get; private set; }
         public int ShapeNr { get; private set; }
         public int PermutationNr { get; private set; }
+        public int PermutationCount => Shapes.GetNumberOfPermutations(ShapeNr);
         public Coordinate[] Coordinates { get; private set; }
 
         public Piece(PieceColors color, int shapeNr) 
@@ -51,11 +52,6 @@ namespace Blokus3D
             PermutationNr = (PermutationNr + 1) % Shapes.GetNumberOfPermutations(ShapeNr);
             Coordinates = HelperClass.Copy(Shapes.GetPermutation(ShapeNr, PermutationNr));
             MoveTo(baseCoordinate);
-        }
-
-        public int GetNrOfPermutations()
-        {
-            return Shapes.GetNumberOfPermutations(ShapeNr);
         }
 
         public int Size()

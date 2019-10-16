@@ -36,8 +36,6 @@ namespace Blokus3D
         {
             _transform = new Transform3DGroup();
             _solutions = new List<Board>();
-            _solutionNr = -1;
-            _pieceNr = -1;
             _displayBoard = new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ);
             DrawGrid();
             ResetSolver();
@@ -87,10 +85,10 @@ namespace Blokus3D
         private void DrawText()
         {
             solutionText.Text = _isWatchingSolution 
-                ? string.Format("Solution: {0}/{1}", _solutionNr + 1, _solutions.Any() ? _solutions.Count : 0)
+                ? "Solution: " + (_solutions.Any() ? _solutionNr + 1 + "/" + _solutions.Count : "0/0")
                 : _solver.Status.ToString();
             pieceText.Text = _isWatchingSolution 
-                ? string.Format("     Piece: {0}/{1}", _pieceNr + 1, _solutions.Any() ? _solutions[_solutionNr].Pieces.Count : 0)
+                ? "     Piece: " + (_solutions.Any() ? _pieceNr + 1 + "/" + _solutions[_solutionNr].Pieces.Count : "0/0")
                 : "Solutions found: " + _solutions.Count;
 
             if (Configuration.Delay <= 5)
@@ -361,7 +359,7 @@ namespace Blokus3D
         {
             _isWatchingSolution = true;
             Dispatcher.Invoke(new DrawTextDelegate(DrawText));
-            if (_solutionNr < _solutions.Count)
+            if(_solutionNr < _solutions.Count)
             {
                 Dispatcher.Invoke(new BoardUpdateDelegate(BoardUpdate), _solutions[_solutionNr]);
             }

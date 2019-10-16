@@ -90,37 +90,37 @@ namespace Blokus3D
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X, coordinate.Y, coordinate.Z - 1))) // Bottom
                 {
                     var center = new Point3D((positions[0].X + positions[1].X) / 2, (positions[0].Y + positions[2].Y) / 2, positions[0].Z - _textDelta);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[0] - positions[1], positions[0] - positions[2]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[0] - positions[1], positions[0] - positions[2]);
                     textModel.Children.Add(label.Model);
                 }
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X, coordinate.Y, coordinate.Z + 1))) // Top
                 {
                     var center = new Point3D((positions[4].X + positions[5].X) / 2, (positions[4].Y + positions[6].Y) / 2, positions[4].Z + _textDelta);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[5] - positions[4], positions[6] - positions[4]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[5] - positions[4], positions[6] - positions[4]);
                     textModel.Children.Add(label.Model);
                 }
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X, coordinate.Y - 1, coordinate.Z))) // Front
                 {
                     var center = new Point3D((positions[0].X + positions[1].X) / 2, positions[0].Y - _textDelta, (positions[0].Z + positions[4].Z) / 2);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[1] - positions[0], positions[4] - positions[0]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[1] - positions[0], positions[4] - positions[0]);
                     textModel.Children.Add(label.Model);
                 }
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X - 1, coordinate.Y, coordinate.Z))) // Left
                 {
                     var center = new Point3D(positions[0].X - _textDelta, (positions[0].Y + positions[2].Y) / 2, (positions[0].Z + positions[4].Z) / 2);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[0] - positions[2], positions[4] - positions[0]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[0] - positions[2], positions[4] - positions[0]);
                     textModel.Children.Add(label.Model);
                 }
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X, coordinate.Y + 1, coordinate.Z))) // Back
                 {
                     var center = new Point3D((positions[2].X + positions[3].X) / 2, positions[2].Y + _textDelta, (positions[2].Z + positions[6].Z) / 2);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[3] - positions[2], positions[6] - positions[2]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[3] - positions[2], positions[6] - positions[2]);
                     textModel.Children.Add(label.Model);
                 }
                 if (!piece.Coordinates.Contains(new Coordinate(coordinate.X + 1, coordinate.Y, coordinate.Z))) // Right
                 {
                     var center = new Point3D(positions[1].X + _textDelta, (positions[1].Y + positions[3].Y) / 2, (positions[1].Z + positions[5].Z) / 2);
-                    var label = new TextLabel3D(text, _textBrush, true, textSize, center, positions[1] - positions[3], positions[5] - positions[1]);
+                    var label = new TextLabel3D(text, _textBrush, textSize, center, positions[1] - positions[3], positions[5] - positions[1]);
                     textModel.Children.Add(label.Model);
                 }
 
