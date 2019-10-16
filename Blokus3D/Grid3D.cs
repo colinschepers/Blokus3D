@@ -21,7 +21,7 @@ namespace Blokus3D
 
         private GeometryModel3D CreateModel()
         {
-            var allPositions = Point3DContainer.GetAllPoints();
+            var allPositions = Point3DContainer.Instance.GetAllPoints();
 
             var indicesBase = 0;
             var lenX = Configuration.BoardSizeX + 1;

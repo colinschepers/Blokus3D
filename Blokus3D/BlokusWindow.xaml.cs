@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace Blokus3D
@@ -17,7 +18,7 @@ namespace Blokus3D
         private Solver _solver;
         private List<Board> _solutions;
         private bool _isWatchingSolution;
-        private Board _displayBoard;
+        private Board _board;
         private int _solutionNr, _pieceNr;
 
         delegate void BoardUpdateDelegate(Board board);
@@ -36,7 +37,9 @@ namespace Blokus3D
         {
             _transform = new Transform3DGroup();
             _solutions = new List<Board>();
-            _displayBoard = new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ);
+            _board = new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ);
+            var warmup1 = Point3DContainer.Instance;
+            var warmup2 = Piece3DContainer.Instance;
             DrawGrid();
             ResetSolver();
             DrawText();
@@ -58,27 +61,20 @@ namespace Blokus3D
             group.Children.Add(grid3D.Model);
         }
 
-        private void DrawBoard(Board board, bool shouldDrawLabel)
+        private void DrawBoard(Board board)
         {
             for (int i = group.Children.Count - 1; i >= 3; i--)
             {
                 group.Children.RemoveAt(i);
             }
 
-            foreach (var piece in board.Pieces.ToList())
+            var pieces = board.Pieces.ToList();
+            for (int i = 0; i < pieces.Count; i++)
             {
-                var piece3D = _solver.ColorCount == 1
-                    ? Piece3DContainer.GetSingleSetPiece3D(piece)
-                    : Piece3DContainer.GetPiece3D(piece);
-
+                var piece3D = Piece3DContainer.Instance.GetPiece3D(pieces[i]);
+                piece3D.Model.Material = new DiffuseMaterial(new SolidColorBrush(HelperClass.GetMediaColor(i)));
                 piece3D.Model.Transform = _transform;
                 group.Children.Add(piece3D.Model);
-
-                if (shouldDrawLabel)
-                {
-                    piece3D.TextModel.Transform = _transform;
-                    group.Children.Add(piece3D.TextModel);
-                }
             }
         }
 
@@ -119,7 +115,7 @@ namespace Blokus3D
                 }
                 else if (_isWatchingSolution)
                 {
-                    DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                    DrawBoard(_board);
                 }
             }
         }
@@ -152,7 +148,7 @@ namespace Blokus3D
             _solutionNr = 0;
             _pieceNr = 0;
             ResetSolver();
-            DrawBoard(new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ), Configuration.ShouldDrawLabel);
+            DrawBoard(new Board(Configuration.BoardSizeX, Configuration.BoardSizeY, Configuration.BoardSizeZ));
             DrawText();
             _isWatchingSolution = false;
         }
@@ -162,9 +158,9 @@ namespace Blokus3D
             if (_solutions.Count > 0)
             {
                 _solutionNr = Math.Max(0, _solutionNr - 1);
-                _displayBoard = (Board)_solutions[_solutionNr].Clone();
-                _pieceNr = _displayBoard.Pieces.Count - 1;
-                DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                _board = (Board)_solutions[_solutionNr].Clone();
+                _pieceNr = _board.Pieces.Count - 1;
+                DrawBoard(_board);
                 _isWatchingSolution = true;
                 DrawText();
             }
@@ -176,9 +172,9 @@ namespace Blokus3D
             if (_solutions.Count > 0)
             {
                 Board board = _solutions[_solutionNr];
-                _displayBoard = new Board(board.Data.GetLength(0), board.Data.GetLength(1), board.Data.GetLength(2));
-                _displayBoard.Place(board.Pieces[0]);
-                DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                _board = new Board(board.Data.GetLength(0), board.Data.GetLength(1), board.Data.GetLength(2));
+                _board.Place(board.Pieces[0]);
+                DrawBoard(_board);
                 _isWatchingSolution = true;
                 DrawText();
             }
@@ -191,8 +187,8 @@ namespace Blokus3D
                 if (_pieceNr > 0)
                 {
                     _pieceNr--;
-                    _displayBoard.Remove(_displayBoard.Pieces[_displayBoard.Pieces.Count - 1]);
-                    DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                    _board.Remove(_board.Pieces[_board.Pieces.Count - 1]);
+                    DrawBoard(_board);
                     DrawText();
                 }
                 _isWatchingSolution = true;
@@ -205,8 +201,8 @@ namespace Blokus3D
             {
                 Board board = _solutions[_solutionNr];
                 _pieceNr = Math.Min(board.Pieces.Count - 1, _pieceNr + 1);
-                _displayBoard.Place(board.Pieces[_pieceNr]);
-                DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                _board.Place(board.Pieces[_pieceNr]);
+                DrawBoard(_board);
                 _isWatchingSolution = true;
                 DrawText();
             }
@@ -216,9 +212,9 @@ namespace Blokus3D
         {
             if (_solutions.Count > 0)
             {
-                _displayBoard = (Board)_solutions[_solutionNr].Clone();
-                _pieceNr = _displayBoard.Pieces.Count - 1;
-                DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                _board = (Board)_solutions[_solutionNr].Clone();
+                _pieceNr = _board.Pieces.Count - 1;
+                DrawBoard(_board);
                 _isWatchingSolution = true;
                 DrawText();
             }
@@ -229,9 +225,9 @@ namespace Blokus3D
             if (_solutions.Count > 0)
             {
                 _solutionNr = Math.Min(_solutions.Count - 1, _solutionNr + 1);
-                _displayBoard = (Board)_solutions[_solutionNr].Clone();
-                _pieceNr = _displayBoard.Pieces.Count - 1;
-                DrawBoard(_displayBoard, Configuration.ShouldDrawLabel);
+                _board = (Board)_solutions[_solutionNr].Clone();
+                _pieceNr = _board.Pieces.Count - 1;
+                DrawBoard(_board);
                 _isWatchingSolution = true;
                 DrawText();
             }
@@ -345,7 +341,7 @@ namespace Blokus3D
         {
             if (!_isWatchingSolution && _solver.Status == Solver.SolverStatus.Running && Configuration.Delay > 5)
             {
-                DrawBoard(board, Configuration.ShouldDrawLabel);
+                DrawBoard(board);
             }
         }
 

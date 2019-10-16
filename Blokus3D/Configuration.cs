@@ -11,7 +11,6 @@ namespace Blokus3D
         public static int ShapeCount { get; set; } = 11;
         public static int PermutationCount { get; set; } = 24;
         public static int Delay { get; set; } = 0;
-        public static bool ShouldDrawLabel { get; set; } = false;
         public static List<Piece> PieceSet { get; set; } = CreatePieceSet();
 
         private static List<Piece> CreatePieceSet()

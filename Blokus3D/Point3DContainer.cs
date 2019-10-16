@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Media.Media3D;
 
 namespace Blokus3D
 {
     public class Point3DContainer
     {
+        private static readonly Point3DContainer _instance = new Point3DContainer();
         private static int _boardSizeX, _boardSizeY, _boardSizeZ;
         private static List<Point3D> _allPoints;
 
-        public static List<Point3D> GetAllPoints()
+        public static Point3DContainer Instance { get { Load(); return _instance; } }
+
+        private Point3DContainer()
         {
-            UpdateAllPoints();
+        }
+
+        public List<Point3D> GetAllPoints()
+        {
             return _allPoints;
         }
 
-        public static Point3D[] GetPositions(Coordinate coordinate)
+        public Point3D[] GetPositions(Coordinate coordinate)
         {
-            UpdateAllPoints();
-
             var lenX = _boardSizeX + 1;
             var lenY = _boardSizeY + 1;
             var lenZ = _boardSizeZ + 1;
@@ -39,7 +41,7 @@ namespace Blokus3D
             return positions;
         }
 
-        private static void UpdateAllPoints()
+        private static void Load()
         {
             if (_boardSizeX != Configuration.BoardSizeX || _boardSizeY != Configuration.BoardSizeY || _boardSizeZ != Configuration.BoardSizeZ)
             {

@@ -23,7 +23,6 @@ namespace Blokus3D
             SizeXComboBox.SelectionChanged += new SelectionChangedEventHandler(SizeXChanged);
             SizeYComboBox.SelectionChanged += new SelectionChangedEventHandler(SizeYChanged);
             SizeZComboBox.SelectionChanged += new SelectionChangedEventHandler(SizeZChanged);
-            ShouldDrawLabelCheckBox.IsChecked = Configuration.ShouldDrawLabel;
 
             foreach (var pieceColor in Enum.GetValues(typeof(PieceColors)).Cast<PieceColors>())
             {
@@ -63,16 +62,6 @@ namespace Blokus3D
             var item = (ComboBoxItem)e.AddedItems[0];
             var newSize = int.Parse(item.Content.ToString());
             _changes.Add(new Action(delegate { Configuration.BoardSizeZ = newSize; BoardChanged = true; }));
-        }
-
-        private void ShouldDrawLabel(object sender, RoutedEventArgs e)
-        {
-            _changes.Add(new Action(delegate { Configuration.ShouldDrawLabel = true; }));
-        }
-
-        private void ShouldNotDrawLabel(object sender, RoutedEventArgs e)
-        {
-            _changes.Add(new Action(delegate { Configuration.ShouldDrawLabel = false; }));
         }
 
         private void PieceClicked(Piece piece, bool enabled)

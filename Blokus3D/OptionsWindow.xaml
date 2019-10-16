@@ -64,8 +64,6 @@
                 <ComboBoxItem Content="9" HorizontalAlignment="Center"></ComboBoxItem>
                 <ComboBoxItem Content="10" HorizontalAlignment="Center"></ComboBoxItem>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="Shape Numbers" />
-            <CheckBox Content="" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Name="ShouldDrawLabelCheckBox" Checked="ShouldDrawLabel" Unchecked="ShouldNotDrawLabel" />
         </Grid>
 
         <Grid Name="PieceGrid" Grid.Column="1">
