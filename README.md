@@ -2,9 +2,9 @@
 
 This is my first C# application, created to practice for a job interview back in 2012.
 
-<img align="right" src="./Images/Pieces.jpg" alt="" title="The 11 unique pieces" width="300"/>
-
 ## Setup
+
+<img align="right" src="./Images/Pieces.jpg" alt="" title="The 11 unique pieces" width="250"/>
 
 The goal of the application is to completely fill a 3 dimensional space with a (sub)set of the pieces of the Block3D game. Any of the 3 dimensions of the space to solve is configurable with a minimum of 1 and a maximum of 6. The unique pieces are shown in the image below. There are 4 sets of pieces, allowing the solver to use the same piece 4 times.
 
