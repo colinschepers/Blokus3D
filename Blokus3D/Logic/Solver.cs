@@ -1,8 +1,6 @@
 ﻿using Blokus3D.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Blokus3D
@@ -70,7 +68,7 @@ namespace Blokus3D
 
                         _board.Place(piece);
                         _pieceSet.RemoveAt(p);
-                        
+
                         Thread.Sleep(Configuration.Delay);
 
                         var solutionFound = _board.FreeSquares == 0;

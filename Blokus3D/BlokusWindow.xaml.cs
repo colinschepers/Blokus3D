@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 
 namespace Blokus3D
@@ -17,7 +18,7 @@ namespace Blokus3D
     {
         private bool _mouseDown;
         private Point _mouseLastPosition;
-        private Transform3D _transform;
+        private Transform3DGroup _transform;
         private Solver _solver;
         private List<Board> _solutions;
         private bool _isWatchingSolution;
@@ -77,6 +78,7 @@ namespace Blokus3D
             var grid3D = new Grid3D();
             grid3D.Model.Transform = _transform;
             group.Children.Add(grid3D.Model);
+            Animation(true);
         }
 
         private void DrawBoard(Board board)
@@ -96,10 +98,35 @@ namespace Blokus3D
             }
         }
         
+        private void Animation(bool rotate)
+        {
+            if (rotate)
+            {
+                rotate3D.BeginAnimation(AxisAngleRotation3D.AngleProperty, null);
+                
+                if(Configuration.Delay == 0)
+                {
+                    return;
+                }
+
+                var duration = Configuration.Delay <= 10 ? TimeSpan.FromSeconds(5)
+                    : Configuration.Delay <= 100 ? TimeSpan.FromSeconds(10)
+                    : Configuration.Delay <= 1000 ? TimeSpan.FromSeconds(5)
+                    : TimeSpan.FromMinutes(1);
+
+                var animation = new DoubleAnimation(360, duration) { RepeatBehavior = RepeatBehavior.Forever };
+                rotate3D.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
+            }
+            else if(!rotate)
+            {
+                rotate3D.BeginAnimation(AxisAngleRotation3D.AngleProperty, null);
+            }
+        }
+
         private void ResetClick(object sender, RoutedEventArgs e)
         {
-            _camera.Position = new Point3D(_camera.Position.X, _camera.Position.Y, 7);
-            (_transform as Transform3DGroup).Children.Clear();
+            Camera.Position = new Point3D(Camera.Position.X, Camera.Position.Y, 7);
+            _transform.Children.Clear();
         }
 
         private void OptionsClick(object sender, RoutedEventArgs e)
@@ -128,6 +155,7 @@ namespace Blokus3D
             StopClick(sender, e);
             _solver.Solve();
             DrawText();
+            Animation(true);
         }
 
         private void PauseClick(object sender, RoutedEventArgs e)
@@ -277,7 +305,7 @@ namespace Blokus3D
                 var lastRot = 0.01 * Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
 
                 var rotation = new QuaternionRotation3D(new Quaternion(lastAx, lastRot * 180 / Math.PI));
-                (_transform as Transform3DGroup).Children.Add(new RotateTransform3D(rotation));
+                _transform.Children.Add(new RotateTransform3D(rotation));
 
                 _mouseLastPosition = mousePosition;
             }
@@ -285,15 +313,16 @@ namespace Blokus3D
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed)
             {
-                return;
+                Animation(!rotate3D.HasAnimatedProperties);
             }
-
-            var pos = Mouse.GetPosition(viewport);
-            _mouseLastPosition = new Point(pos.X - viewport.ActualWidth / 2, viewport.ActualHeight / 2 - pos.Y);
-
-            _mouseDown = true;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var pos = Mouse.GetPosition(viewport);
+                _mouseLastPosition = new Point(pos.X - viewport.ActualWidth / 2, viewport.ActualHeight / 2 - pos.Y);
+                _mouseDown = true;
+            }
         }
 
         private void Grid_MouseUp(object sender, MouseButtonEventArgs e)
@@ -303,8 +332,8 @@ namespace Blokus3D
 
         private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            _camera.Position = new Point3D(_camera.Position.X, _camera.Position.Y, _camera.Position.Z - e.Delta / 250D);
-        }
+            Camera.Position = new Point3D(Camera.Position.X, Camera.Position.Y, Camera.Position.Z - e.Delta / 250D);
+        } 
 
         private void DelaySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -327,11 +356,12 @@ namespace Blokus3D
                     Configuration.Delay = 0;
                     break;
                 default:
-                    break;
+                    return;
             }
             if (_solutions != null && _solver != null)
             {
                 DrawText();
+                Animation(true);
             }
         }
 
@@ -358,7 +388,7 @@ namespace Blokus3D
         {
             _isWatchingSolution = true;
             Dispatcher.Invoke(new DrawTextDelegate(DrawText));
-            if(_solutionNr < _solutions.Count)
+            if (_solutionNr < _solutions.Count)
             {
                 Dispatcher.Invoke(new BoardUpdateDelegate(BoardUpdate), _solutions[_solutionNr]);
             }
